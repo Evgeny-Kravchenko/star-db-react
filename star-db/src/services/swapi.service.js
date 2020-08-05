@@ -10,6 +10,11 @@ export default class SwapiService {
     return body;
   }
 
+  _extractId = (item) => {
+    const idRegExp = /\/([0-9]*)\/$/;
+    return item.url.match(idRegExp)[1];
+  };
+
   async getAllPeople() {
     const res = await this.getResource('/people/');
     return res.results.map(this._transformPerson);
@@ -17,16 +22,29 @@ export default class SwapiService {
 
   async getPerson(id) {
     const person = await this.getResource(`/people/${id}`);
-    return this._transformPerson(person);
+    const imageUrl = await this.getImagePerson(id);
+    return this._transformPerson({ ...person, imageUrl });
   }
+
+  getImagePerson = (id) => {
+    return fetch(`https://starwars-visualguide.com/assets/img/characters/${id}.jpg`).then(
+      (image) => {
+        if (image.status === 200) {
+          return image.url;
+        }
+        return './assets/images/not-found-person.jpg';
+      },
+    );
+  };
 
   _transformPerson = (person) => {
     return {
-      id: person.id,
+      id: this._extractId(person),
       name: person.name,
       gender: person.gender,
-      birthYear: person.birthYear,
-      eyeColor: person.eyeColor,
+      birthYear: person.birth_year,
+      eyeColor: person.eye_color,
+      imageUrl: person.imageUrl,
     };
   };
 
@@ -38,7 +56,7 @@ export default class SwapiService {
   async getPlanet(id) {
     const planet = await this.getResource(`/planets/${id}`);
     const imageUrl = await this.getImagePlanet(id);
-    return this._transformPlanet({ ...planet, imageUrl, id });
+    return this._transformPlanet({ ...planet, imageUrl });
   }
 
   getImagePlanet = (id) => {
@@ -52,7 +70,7 @@ export default class SwapiService {
 
   _transformPlanet = (planet) => {
     return {
-      id: planet.id,
+      id: this._extractId(planet),
       name: planet.name,
       population: planet.population,
       rotationPeriod: planet.rotation_period,
@@ -73,7 +91,7 @@ export default class SwapiService {
 
   _transformStarship = (starship) => {
     return {
-      id: starship.id,
+      id: this._extractId(starship),
       name: starship.name,
       model: starship.model,
       manufacturer: starship.manufacturer,
