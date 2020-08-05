@@ -1,0 +1,37 @@
+.application {
+  max-width: 1140px;
+  margin: 0 auto;
+
+  &__items-descr {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+}
+
+.items-descr {
+
+  &__item {
+    max-width: 600px;
+    margin: 10px 30px;
+    flex-grow: 1;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .items-descr {
+
+    &__item {
+      max-width: 100%;
+    }
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .items-descr {
+    &__item {
+      margin: 10px;
+    }
+  }
+}
