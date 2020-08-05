@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
+
 import './Random-planet.scss';
 
 import SwapiService from '../../services/swapi.service';
 import Spinner from '../Spinner';
+import ErrorIndicator from '../Error-indicator/Error-indicator';
 
 const PlanetView = (planet) => {
   const { name, population, rotationPeriod, diameter, imageUrl } = planet;
@@ -33,6 +35,7 @@ export default class RandomPlanet extends Component {
       diameter: null,
       imageUrl: null,
       loading: true,
+      error: false,
     };
   }
 
@@ -44,27 +47,36 @@ export default class RandomPlanet extends Component {
     this.setState({ ...planet, loading: false });
   };
 
+  onError = () => {
+    this.setState({ error: true, loading: false });
+  };
+
   updatePlanet() {
     const id = Math.floor(Math.random() * 25 + 2);
-    this.swapiService.getPlanet(id).then(this.onPlanetLoaded);
+    this.swapiService.getPlanet(id).then(this.onPlanetLoaded).catch(this.onError);
   }
 
   render() {
-    const { name, population, rotationPeriod, diameter, imageUrl, loading } = this.state;
+    const { name, population, rotationPeriod, diameter, imageUrl, loading, error } = this.state;
+
+    const spinner = loading ? <Spinner /> : null;
+    const planetView =
+      !loading && !error ? (
+        <PlanetView
+          name={name}
+          population={population}
+          rotationPeriod={rotationPeriod}
+          diameter={diameter}
+          imageUrl={imageUrl}
+        />
+      ) : null;
+    const errorView = error ? <ErrorIndicator /> : null;
 
     return (
       <div className="card border-primary mb-3 planet-details">
-        {loading ? (
-          <Spinner />
-        ) : (
-          <PlanetView
-            name={name}
-            population={population}
-            rotationPeriod={rotationPeriod}
-            diameter={diameter}
-            imageUrl={imageUrl}
-          />
-        )}
+        {spinner}
+        {planetView}
+        {errorView}
       </div>
     );
   }
