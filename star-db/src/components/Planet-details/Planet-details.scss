@@ -1,0 +1,44 @@
+.planet-details {
+  margin: 10px 30px;
+  border: 0;
+
+  &__body {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+  }
+
+  &__image {
+    max-width: 300px;
+  }
+
+  &__description {
+    padding-left: 30px;
+  }
+
+  &__items {
+    padding: 0;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .planet-details {
+    margin: 10px;
+
+    &__body {
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 0;
+    }
+
+    &__description {
+      width: 100%;
+      padding: 0;
+
+      h4 {
+        text-align: center;
+        margin: 20px 0;
+      }
+    }
+  }
+}
