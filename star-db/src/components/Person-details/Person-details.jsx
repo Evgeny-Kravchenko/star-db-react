@@ -89,5 +89,5 @@ export default class PersonDetails extends Component {
 }
 
 PersonDetails.propTypes = {
-  personId: PropTypes.number.isRequired,
+  personId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
 };
