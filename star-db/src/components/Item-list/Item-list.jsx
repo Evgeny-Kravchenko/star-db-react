@@ -29,7 +29,8 @@ export default class ItemList extends Component {
         </div>
       );
     }
-    const { onItemSelected, renderItem } = this.props;
+    const { onItemSelected } = this.props;
+    const { children: renderItem } = this.props;
     const itemListElements = itemList.map((item) => {
       const { id } = item;
       const label = renderItem(item);
@@ -51,5 +52,5 @@ export default class ItemList extends Component {
 ItemList.propTypes = {
   onItemSelected: PropTypes.func.isRequired,
   getData: PropTypes.func.isRequired,
-  renderItem: PropTypes.func.isRequired,
+  children: PropTypes.func.isRequired,
 };

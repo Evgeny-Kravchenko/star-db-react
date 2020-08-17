@@ -5,23 +5,21 @@ import './People-page.scss';
 
 import ItemList from '../Item-list';
 import PersonDetails from '../Person-details';
-import ErrorIndicator from '../Error-indicator/Error-indicator';
+import Row from '../Row';
+import ErrorBoundry from '../Error-boundry';
 
 const PeoplePageView = (props) => {
   const { selectedPerson, onPersonSelected, getData } = props;
   const itemList = (
-    <ItemList
-      onItemSelected={onPersonSelected}
-      getData={getData}
-      renderItem={({ name, gender, birthYear }) => `${name}, ${gender}, ${birthYear}`}
-    />
+    <ItemList onItemSelected={onPersonSelected} getData={getData}>
+      {(i) => `${i.name}, ${i.birthYear}`}
+    </ItemList>
   );
   const personDetails = <PersonDetails personId={selectedPerson} />;
   return (
-    <div className="application__items-descr items-descr">
-      <div className="items-descr__item">{itemList}</div>
-      <div className="items-descr__item">{personDetails}</div>
-    </div>
+    <ErrorBoundry>
+      <Row left={itemList} right={personDetails} />
+    </ErrorBoundry>
   );
 };
 
@@ -36,12 +34,7 @@ export default class PeoplePage extends Component {
     super(props);
     this.state = {
       selectedPerson: 1,
-      hasError: false,
     };
-  }
-
-  componentDidCatch() {
-    this.setState({ hasError: true });
   }
 
   onPersonSelected = (id) => {
@@ -49,21 +42,14 @@ export default class PeoplePage extends Component {
   };
 
   render() {
-    const { selectedPerson, hasError } = this.state;
+    const { selectedPerson } = this.state;
     const { getData } = this.props;
-    const errorIndicator = hasError ? <ErrorIndicator /> : null;
-    const personPage = !hasError ? (
+    return (
       <PeoplePageView
         selectedPerson={selectedPerson}
         onPersonSelected={this.onPersonSelected}
         getData={getData}
       />
-    ) : null;
-    return (
-      <>
-        {errorIndicator}
-        {personPage}
-      </>
     );
   }
 }
