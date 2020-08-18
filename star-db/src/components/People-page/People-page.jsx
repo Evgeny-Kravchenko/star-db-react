@@ -8,6 +8,7 @@ import ItemDetails from '../Item-details';
 import Row from '../Row';
 import ErrorBoundry from '../Error-boundry';
 import SwapiService from '../../services/swapi.service';
+import Record from '../Record';
 
 const swapiService = new SwapiService();
 
@@ -18,7 +19,13 @@ const PeoplePageView = (props) => {
       {(i) => `${i.name}, ${i.birthYear}`}
     </ItemList>
   );
-  const personDetails = <ItemDetails itemId={selectedPerson} getData={swapiService.getPerson} />;
+  const personDetails = (
+    <ItemDetails itemId={selectedPerson} getData={swapiService.getPerson}>
+      <Record label="Gender" field="gender" />
+      <Record label="Eye color" field="eyeColor" />
+      <Record label="Birth year" field="birthYear" />
+    </ItemDetails>
+  );
   return (
     <ErrorBoundry>
       <Row left={itemList} right={personDetails} />
