@@ -1,6 +1,8 @@
 export default class SwapiService {
   _apiBase = 'https://swapi.dev/api';
 
+  _apiImageBase = 'https://starwars-visualguide.com/assets/img';
+
   getResource = async (url) => {
     const res = await fetch(`${this._apiBase}${url}`);
     if (!res.ok) {
@@ -27,14 +29,12 @@ export default class SwapiService {
   };
 
   getImagePerson = (id) => {
-    return fetch(`https://starwars-visualguide.com/assets/img/characters/${id}.jpg`).then(
-      (image) => {
-        if (image.status === 200) {
-          return image.url;
-        }
-        return './assets/images/not-found-person.jpg';
-      },
-    );
+    return fetch(`${this._apiImageBase}/characters/${id}.jpg`).then((image) => {
+      if (image.status === 200) {
+        return image.url;
+      }
+      return './assets/images/not-found-person.jpg';
+    });
   };
 
   _transformPerson = (person) => {
@@ -60,7 +60,7 @@ export default class SwapiService {
   };
 
   getImagePlanet = (id) => {
-    return fetch(`https://starwars-visualguide.com/assets/img/planets/${id}.jpg`).then((image) => {
+    return fetch(`${this._apiImageBase}/planets/${id}.jpg`).then((image) => {
       if (image.status === 200) {
         return image.url;
       }
@@ -86,7 +86,17 @@ export default class SwapiService {
 
   getStarship = async (id) => {
     const starship = await this.getResource(`/starships/${id}`);
-    return this._transformStarship(starship);
+    const imageUrl = await this.getImageStarship(id);
+    return this._transformStarship({ ...starship, imageUrl });
+  };
+
+  getImageStarship = async (id) => {
+    return fetch(`${this._apiImageBase}/starships/${id}.jpg`).then((image) => {
+      if (image.status === 200) {
+        return image.url;
+      }
+      return './assets/images/not-found-planet.jpg';
+    });
   };
 
   _transformStarship = (starship) => {
@@ -100,6 +110,7 @@ export default class SwapiService {
       crew: starship.crew,
       passengers: starship.passengers,
       cargoCapacity: starship.cargoCapacity,
+      imageUrl: starship.imageUrl,
     };
   };
 }

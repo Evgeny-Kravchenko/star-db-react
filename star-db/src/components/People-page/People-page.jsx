@@ -4,9 +4,12 @@ import PropTypes from 'prop-types';
 import './People-page.scss';
 
 import ItemList from '../Item-list';
-import PersonDetails from '../Person-details';
+import ItemDetails from '../Item-details';
 import Row from '../Row';
 import ErrorBoundry from '../Error-boundry';
+import SwapiService from '../../services/swapi.service';
+
+const swapiService = new SwapiService();
 
 const PeoplePageView = (props) => {
   const { selectedPerson, onPersonSelected, getData } = props;
@@ -15,7 +18,7 @@ const PeoplePageView = (props) => {
       {(i) => `${i.name}, ${i.birthYear}`}
     </ItemList>
   );
-  const personDetails = <PersonDetails personId={selectedPerson} />;
+  const personDetails = <ItemDetails itemId={selectedPerson} getData={swapiService.getPerson} />;
   return (
     <ErrorBoundry>
       <Row left={itemList} right={personDetails} />
