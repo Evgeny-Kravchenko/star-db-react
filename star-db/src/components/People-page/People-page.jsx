@@ -1,42 +1,22 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 
 import './People-page.scss';
 
-import ItemList from '../Item-list';
-import ItemDetails from '../Item-details';
+import { PersonList, PersonDetails } from '../sw-components';
 import Row from '../Row';
 import ErrorBoundry from '../Error-boundry';
-import SwapiService from '../../services/swapi.service';
-import Record from '../Record';
-
-const swapiService = new SwapiService();
 
 const PeoplePageView = (props) => {
-  const { selectedPerson, onPersonSelected, getData } = props;
+  const { onPersonSelected, selectedPerson } = props;
   const itemList = (
-    <ItemList onItemSelected={onPersonSelected} getData={getData}>
-      {(i) => `${i.name}, ${i.birthYear}`}
-    </ItemList>
+    <PersonList onItemSelected={onPersonSelected}>{(i) => `${i.name}, ${i.birthYear}`}</PersonList>
   );
-  const personDetails = (
-    <ItemDetails itemId={selectedPerson} getData={swapiService.getPerson}>
-      <Record label="Gender" field="gender" />
-      <Record label="Eye color" field="eyeColor" />
-      <Record label="Birth year" field="birthYear" />
-    </ItemDetails>
-  );
+  const personDetails = <PersonDetails itemId={selectedPerson} />;
   return (
     <ErrorBoundry>
       <Row left={itemList} right={personDetails} />
     </ErrorBoundry>
   );
-};
-
-PeoplePageView.propTypes = {
-  selectedPerson: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-  onPersonSelected: PropTypes.func.isRequired,
-  getData: PropTypes.func.isRequired,
 };
 
 export default class PeoplePage extends Component {
@@ -53,17 +33,8 @@ export default class PeoplePage extends Component {
 
   render() {
     const { selectedPerson } = this.state;
-    const { getData } = this.props;
     return (
-      <PeoplePageView
-        selectedPerson={selectedPerson}
-        onPersonSelected={this.onPersonSelected}
-        getData={getData}
-      />
+      <PeoplePageView selectedPerson={selectedPerson} onPersonSelected={this.onPersonSelected} />
     );
   }
 }
-
-PeoplePage.propTypes = {
-  getData: PropTypes.func.isRequired,
-};
