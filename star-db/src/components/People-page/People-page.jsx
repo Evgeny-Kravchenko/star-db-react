@@ -5,13 +5,20 @@ import './People-page.scss';
 import { PersonList, PersonDetails } from '../sw-components';
 import Row from '../Row';
 import ErrorBoundry from '../Error-boundry';
+import Record from '../Record';
 
 const PeoplePageView = (props) => {
   const { onPersonSelected, selectedPerson } = props;
   const itemList = (
     <PersonList onItemSelected={onPersonSelected}>{(i) => `${i.name}, ${i.birthYear}`}</PersonList>
   );
-  const personDetails = <PersonDetails itemId={selectedPerson} />;
+  const personDetails = (
+    <PersonDetails itemId={selectedPerson}>
+      <Record label="Gender" field="gender" />
+      <Record label="Eye color" field="eyeColor" />
+      <Record label="Birth year" field="birthYear" />
+    </PersonDetails>
+  );
   return (
     <ErrorBoundry>
       <Row left={itemList} right={personDetails} />

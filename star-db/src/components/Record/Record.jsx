@@ -2,10 +2,10 @@ import React from 'react';
 
 import './Record.scss';
 
-const Record = ({ item, field, label }) => {
+const Record = ({ data, field, label }) => {
   return (
     <li className="list-group-item">
-      {label}: {item[field]}
+      {label}: {data[field]}
     </li>
   );
 };
