@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Spinner from '../Spinner';
 
-const withData = (View, getData) => {
+const withData = (View) => {
   // eslint-disable-next-line react/display-name
   return class extends Component {
     constructor(props) {
@@ -13,11 +13,13 @@ const withData = (View, getData) => {
     }
 
     componentDidMount() {
-      const { itemId } = this.props;
+      const { itemId, getData } = this.props;
       this.setState({ loading: true });
-      getData(itemId).then((data) => {
-        this.setState({ data, loading: false });
-      });
+      if (getData) {
+        getData(itemId).then((data) => {
+          this.setState({ data, loading: false });
+        });
+      }
     }
 
     componentDidUpdate({ itemId: itemIdPrev }) {
@@ -28,7 +30,7 @@ const withData = (View, getData) => {
     }
 
     updateItem() {
-      const { itemId } = this.props;
+      const { itemId, getData } = this.props;
       if (itemId) {
         this.setState({ loading: true });
         getData(itemId).then((data) => {
