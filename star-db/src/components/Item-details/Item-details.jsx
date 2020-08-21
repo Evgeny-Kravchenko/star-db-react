@@ -11,7 +11,7 @@ const ItemDetails = (props) => {
         <div className="item-details__description">
           <h4 className="card-title">{name}</h4>
           <ul className="item-details__items">
-            {React.Children.map(children, (child) => {
+            {React.Children.map(children().props.children, (child) => {
               return React.cloneElement(child, { data });
             })}
           </ul>
