@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+
 import Spinner from '../Spinner';
+import ErrorIndicator from '../Error-indicator';
 
 const withData = (View) => {
   // eslint-disable-next-line react/display-name
@@ -8,13 +10,13 @@ const withData = (View) => {
       super(props);
       this.state = {
         data: null,
-        loading: false,
+        loading: true,
+        error: false,
       };
     }
 
     componentDidMount() {
       const { itemId, getData } = this.props;
-      this.setState({ loading: true });
       if (getData) {
         getData(itemId).then((data) => {
           this.setState({ data, loading: false });
@@ -31,22 +33,28 @@ const withData = (View) => {
 
     updateItem() {
       const { itemId, getData } = this.props;
-      if (itemId) {
-        this.setState({ loading: true });
-        getData(itemId).then((data) => {
+
+      this.setState({ loading: true, error: false });
+      getData(itemId)
+        .then((data) => {
           this.setState({ data, loading: false });
+        })
+        .catch(() => {
+          this.setState({ error: true, loading: false });
         });
-      }
     }
 
     render() {
-      const { data, loading } = this.state;
-      if (!data && loading) {
+      const { data, loading, error } = this.state;
+      if (loading) {
         return (
           <div className="item-spinner">
             <Spinner />
           </div>
         );
+      }
+      if (error) {
+        return <ErrorIndicator />;
       }
       if (!data) {
         return <span>Please, select item</span>;
