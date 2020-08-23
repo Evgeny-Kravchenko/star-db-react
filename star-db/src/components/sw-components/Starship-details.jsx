@@ -2,18 +2,23 @@ import React from 'react';
 
 import ItemDetails from '../Item-details';
 
-import { withData, withChildFunction, withSwapiService } from '../hoc-helpers';
+import { withData, withChildFunction, withSwapiService, compose } from '../hoc-helpers';
 
 import Record from '../Record';
 
-const StarshipDetails = withChildFunction(() => (
+const mapMethodToProps = (swapiService) => ({ getData: swapiService.getStarship });
+const funcName = () => (
   <>
     <Record label="Model" field="model" />
     <Record label="Length" field="length" />
     <Record label="Cost" field="costInCredits" />
   </>
-))(withData(ItemDetails));
+);
 
-const mapMethodToProps = (swapiService) => ({ getData: swapiService.getStarship });
+const StarshipDetails = compose(
+  withSwapiService(mapMethodToProps),
+  withData,
+  withChildFunction(funcName),
+)(ItemDetails);
 
-export default withSwapiService(mapMethodToProps)(StarshipDetails);
+export default StarshipDetails;
