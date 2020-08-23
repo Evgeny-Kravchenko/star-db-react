@@ -5,18 +5,16 @@ const mapMethodToPerson = (swapiService) => ({ getData: swapiService.getAllPeopl
 const mapMethodToPlanet = (swapiService) => ({ getData: swapiService.getAllPlanets });
 const mapMethodToStarship = (swapiService) => ({ getData: swapiService.getAllStarships });
 
-const PersonList = withSwapiService(
-  withData(withChildFunction(ItemList, (i) => `${i.name}, ${i.birthYear}`)),
-  mapMethodToPerson,
-);
-const PlanetList = withSwapiService(
-  withData(withChildFunction(ItemList, (i) => `${i.name}`)),
-  mapMethodToPlanet,
+const PersonList = withSwapiService(mapMethodToPerson)(
+  withData(withChildFunction((i) => `${i.name}, ${i.birthYear}`)(ItemList)),
 );
 
-const StarshipList = withSwapiService(
-  withData(withChildFunction(ItemList, (i) => `${i.name}  (${i.model})`)),
-  mapMethodToStarship,
+const PlanetList = withSwapiService(mapMethodToPlanet)(
+  withData(withChildFunction((i) => `${i.name}`)(ItemList)),
+);
+
+const StarshipList = withSwapiService(mapMethodToStarship)(
+  withData(withChildFunction((i) => `${i.name}  (${i.model})`)(ItemList)),
 );
 
 export { PlanetList, PersonList, StarshipList };

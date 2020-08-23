@@ -6,14 +6,14 @@ import { withData, withChildFunction, withSwapiService } from '../hoc-helpers';
 
 import Record from '../Record';
 
-const PersonDetails = withChildFunction(withData(ItemDetails), () => (
+const PersonDetails = withChildFunction(() => (
   <>
     <Record label="Gender" field="gender" />
     <Record label="Eye color" field="eyeColor" />
     <Record label="Birth year" field="birthYear" />
   </>
-));
+))(withData(ItemDetails));
 
 const mapMethodToProps = (swapiService) => ({ getData: swapiService.getPerson });
 
-export default withSwapiService(PersonDetails, mapMethodToProps);
+export default withSwapiService(mapMethodToProps)(PersonDetails);
