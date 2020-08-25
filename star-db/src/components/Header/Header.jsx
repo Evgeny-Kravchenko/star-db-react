@@ -16,7 +16,7 @@ const Header = (props) => {
         <li className="nav-item">
           <Link
             className={`nav-link ${activePage === 'people' ? 'active' : null}`}
-            to="people"
+            to="/people"
             onClick={() => changeActivePage('people')}
           >
             People
@@ -25,7 +25,7 @@ const Header = (props) => {
         <li className="nav-item">
           <Link
             className={`nav-link ${activePage === 'planets' ? 'active' : null}`}
-            to="planets"
+            to="/planets"
             onClick={() => changeActivePage('planets')}
           >
             Planets
@@ -34,7 +34,7 @@ const Header = (props) => {
         <li className="nav-item">
           <Link
             className={`nav-link ${activePage === 'starships' ? 'active' : null}`}
-            to="starships"
+            to="/starships/"
             onClick={() => changeActivePage('starships')}
           >
             Starships
@@ -46,11 +46,12 @@ const Header = (props) => {
 };
 
 Header.propTypes = {
-  activePage: PropTypes.string.isRequired,
+  activePage: PropTypes.string,
   changeActivePage: PropTypes.func,
 };
 
 Header.defaultProps = {
+  activePage: '',
   changeActivePage: () => {},
 };
 export default Header;
