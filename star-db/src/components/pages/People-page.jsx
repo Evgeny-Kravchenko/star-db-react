@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import { PersonList, PersonDetails } from '../sw-components';
 import Row from '../Row';
@@ -6,17 +7,23 @@ import ErrorBoundry from '../Error-boundry';
 
 const PeoplePageView = (props) => {
   const { onItemSelected, selectedItem } = props;
-  const itemList = (
-    <PersonList onItemSelected={onItemSelected} />
-  );
-  const details = (
-    <PersonDetails itemId={selectedItem} />
-  );
+  const itemList = <PersonList onItemSelected={onItemSelected} />;
+  const details = <PersonDetails itemId={selectedItem} />;
   return (
     <ErrorBoundry>
       <Row left={itemList} right={details} />
     </ErrorBoundry>
   );
+};
+
+PeoplePageView.propTypes = {
+  onItemSelected: PropTypes.func,
+  selectedItem: PropTypes.number,
+};
+
+PeoplePageView.defaultProps = {
+  onItemSelected: () => {},
+  selectedItem: 1,
 };
 
 export default class PeoplePage extends Component {
@@ -33,8 +40,6 @@ export default class PeoplePage extends Component {
 
   render() {
     const { selectedItem } = this.state;
-    return (
-      <PeoplePageView selectedItem={selectedItem} onItemSelected={this.onItemSelected} />
-    );
+    return <PeoplePageView selectedItem={selectedItem} onItemSelected={this.onItemSelected} />;
   }
 }

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import { StarshipList, StarshipDetails } from '../sw-components';
 import Row from '../Row';
@@ -13,6 +14,16 @@ const StarshipPageView = (props) => {
       <Row left={itemList} right={details} />
     </ErrorBoundry>
   );
+};
+
+StarshipPageView.propTypes = {
+  onItemSelected: PropTypes.func,
+  selectedItem: PropTypes.number,
+};
+
+StarshipPageView.defaultProps = {
+  onItemSelected: () => {},
+  selectedItem: 1,
 };
 
 export default class StarshipPage extends Component {

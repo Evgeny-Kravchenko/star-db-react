@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import './Item-list.scss';
 
@@ -19,6 +20,16 @@ const ItemList = (props) => {
     );
   });
   return <div className="list-group items-list">{itemListElements}</div>;
+};
+
+ItemList.propTypes = {
+  onItemSelected: PropTypes.func,
+  children: PropTypes.func.isRequired,
+  data: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
+
+ItemList.defaultProps = {
+  onItemSelected: () => {},
 };
 
 export default ItemList;

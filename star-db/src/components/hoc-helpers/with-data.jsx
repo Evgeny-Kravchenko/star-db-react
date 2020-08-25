@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import Spinner from '../Spinner';
 import ErrorIndicator from '../Error-indicator';
 
 const withData = (View) => {
   // eslint-disable-next-line react/display-name
-  return class extends Component {
+  class ViewWithData extends Component {
     constructor(props) {
       super(props);
       this.state = {
@@ -62,7 +63,14 @@ const withData = (View) => {
       // eslint-disable-next-line react/jsx-props-no-spreading
       return <View {...this.props} data={data} />;
     }
+  }
+
+  ViewWithData.propTypes = {
+    itemId: PropTypes.number.isRequired,
+    getData: PropTypes.func.isRequired,
   };
+
+  return ViewWithData;
 };
 
 export default withData;

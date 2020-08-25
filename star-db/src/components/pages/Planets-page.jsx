@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import { PlanetList, PlanetDetails } from '../sw-components';
 import Row from '../Row';
@@ -13,6 +14,16 @@ const PlanetPageView = (props) => {
       <Row left={itemList} right={details} />
     </ErrorBoundry>
   );
+};
+
+PlanetPageView.propTypes = {
+  onItemSelected: PropTypes.func,
+  selectedItem: PropTypes.number,
+};
+
+PlanetPageView.defaultProps = {
+  onItemSelected: () => {},
+  selectedItem: 1,
 };
 
 export default class PlanetPage extends Component {
