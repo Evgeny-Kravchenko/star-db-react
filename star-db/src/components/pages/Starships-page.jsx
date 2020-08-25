@@ -18,7 +18,7 @@ const StarshipPageView = (props) => {
 
 StarshipPageView.propTypes = {
   onItemSelected: PropTypes.func,
-  selectedItem: PropTypes.number,
+  selectedItem: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 };
 
 StarshipPageView.defaultProps = {
@@ -30,7 +30,7 @@ export default class StarshipPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedItem: 2,
+      selectedItem: 5,
     };
   }
 

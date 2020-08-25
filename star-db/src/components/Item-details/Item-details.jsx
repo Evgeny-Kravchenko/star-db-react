@@ -25,7 +25,7 @@ const ItemDetails = (props) => {
 
 ItemDetails.propTypes = {
   children: PropTypes.func.isRequired,
-  data: PropTypes.arrayOf(PropTypes.object).isRequired,
+  data: PropTypes.instanceOf(Object).isRequired,
 };
 
 export default ItemDetails;

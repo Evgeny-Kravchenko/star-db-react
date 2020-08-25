@@ -66,7 +66,8 @@ const withData = (View) => {
   }
 
   ViewWithData.propTypes = {
-    itemId: PropTypes.number.isRequired,
+    // eslint-disable-next-line react/require-default-props
+    itemId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     getData: PropTypes.func.isRequired,
   };
 

@@ -12,9 +12,13 @@ const Record = ({ data, field, label }) => {
 };
 
 Record.propTypes = {
-  data: PropTypes.instanceOf(Object).isRequired,
+  data: PropTypes.instanceOf(Object),
   field: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
+};
+
+Record.defaultProps = {
+  data: {},
 };
 
 export default Record;

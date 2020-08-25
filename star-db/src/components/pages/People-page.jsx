@@ -18,7 +18,7 @@ const PeoplePageView = (props) => {
 
 PeoplePageView.propTypes = {
   onItemSelected: PropTypes.func,
-  selectedItem: PropTypes.number,
+  selectedItem: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 };
 
 PeoplePageView.defaultProps = {

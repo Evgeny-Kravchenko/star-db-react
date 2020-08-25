@@ -18,19 +18,19 @@ const PlanetPageView = (props) => {
 
 PlanetPageView.propTypes = {
   onItemSelected: PropTypes.func,
-  selectedItem: PropTypes.number,
+  selectedItem: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 };
 
 PlanetPageView.defaultProps = {
   onItemSelected: () => {},
-  selectedItem: 1,
+  selectedItem: 5,
 };
 
 export default class PlanetPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedItem: 1,
+      selectedItem: 5,
     };
   }
 
