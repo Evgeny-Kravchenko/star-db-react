@@ -11,19 +11,17 @@
 }
 
 .items-descr {
-
   &__item {
-    max-width: 600px;
+    min-width: 300px;
+    width: 40%;
     margin: 10px 30px;
-    flex-grow: 1;
   }
 }
 
 @media screen and (max-width: 900px) {
   .items-descr {
-
     &__item {
-      max-width: 100%;
+      width: 100%;
     }
   }
 }
