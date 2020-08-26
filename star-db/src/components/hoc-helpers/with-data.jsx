@@ -19,9 +19,13 @@ const withData = (View) => {
     componentDidMount() {
       const { itemId, getData } = this.props;
       if (getData) {
-        getData(itemId).then((data) => {
-          this.setState({ data, loading: false });
-        });
+        getData(itemId)
+          .then((data) => {
+            this.setState({ data, loading: false });
+          })
+          .catch(() => {
+            this.setState({ error: true, loading: false });
+          });
       }
     }
 

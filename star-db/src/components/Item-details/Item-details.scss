@@ -25,6 +25,10 @@
   text-align: center;
 }
 
+.select-item {
+  border-radius: 5px;
+}
+
 @media screen and (max-width: 1000px) {
   .item-details {
     &__body {

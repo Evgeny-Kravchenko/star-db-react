@@ -33,7 +33,7 @@ const App = () => {
               render={() => <h2 className="text-center my-5">Welcome to StarDB</h2>}
               exact
             />
-            <Route path="/people" component={PeoplePage} exact />
+            <Route path="/people/:id?" component={PeoplePage} exact />
             <Route path="/planets" component={PlanetPage} exact />
             <Route path="/starships/" component={StarshipPage} exact />
             <Route
