@@ -29,12 +29,16 @@ export default class SwapiService {
   };
 
   getImagePerson = (id) => {
-    return fetch(`${this._apiImageBase}/characters/${id}.jpg`).then((image) => {
-      if (image.status === 200) {
-        return image.url;
-      }
-      return './assets/images/not-found-person.jpg';
-    });
+    return fetch(`${this._apiImageBase}/characters/${id}.jpg`)
+      .then((image) => {
+        if (image.status === 200) {
+          return image.url;
+        }
+        return '/assets/images/not-found-person.jpg';
+      })
+      .catch(() => {
+        return '/assets/images/not-found-starship.jpg';
+      });
   };
 
   _transformPerson = (person) => {
@@ -60,12 +64,16 @@ export default class SwapiService {
   };
 
   getImagePlanet = (id) => {
-    return fetch(`${this._apiImageBase}/planets/${id}.jpg`).then((image) => {
-      if (image.status === 200) {
-        return image.url;
-      }
-      return './assets/images/not-found-planet.jpg';
-    });
+    return fetch(`${this._apiImageBase}/planets/${id}.jpg`)
+      .then((image) => {
+        if (image.status === 200) {
+          return image.url;
+        }
+        return '/assets/images/not-found-planet.jpg';
+      })
+      .catch(() => {
+        return '/assets/images/not-found-starship.jpg';
+      });
   };
 
   _transformPlanet = (planet) => {
@@ -91,12 +99,16 @@ export default class SwapiService {
   };
 
   getImageStarship = async (id) => {
-    return fetch(`${this._apiImageBase}/starships/${id}.jpg`).then((image) => {
-      if (image.status === 200) {
-        return image.url;
-      }
-      return './assets/images/not-found-planet.jpg';
-    });
+    return fetch(`${this._apiImageBase}/starships/${id}.jpg`)
+      .then((image) => {
+        if (image.status === 200) {
+          return image.url;
+        }
+        return '/assets/images/not-found-starship.jpg';
+      })
+      .catch(() => {
+        return '/assets/images/not-found-starship.jpg';
+      });
   };
 
   _transformStarship = (starship) => {

@@ -19,9 +19,13 @@ const withData = (View) => {
     componentDidMount() {
       const { itemId, getData } = this.props;
       if (getData) {
-        getData(itemId).then((data) => {
-          this.setState({ data, loading: false });
-        });
+        getData(itemId)
+          .then((data) => {
+            this.setState({ data, loading: false });
+          })
+          .catch(() => {
+            this.setState({ error: true, loading: false });
+          });
       }
     }
 
@@ -66,7 +70,8 @@ const withData = (View) => {
   }
 
   ViewWithData.propTypes = {
-    itemId: PropTypes.number.isRequired,
+    // eslint-disable-next-line react/require-default-props
+    itemId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     getData: PropTypes.func.isRequired,
   };
 

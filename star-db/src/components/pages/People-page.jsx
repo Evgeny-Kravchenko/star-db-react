@@ -1,14 +1,23 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import { PersonList, PersonDetails } from '../sw-components';
 import Row from '../Row';
 import ErrorBoundry from '../Error-boundry';
 
-const PeoplePageView = (props) => {
-  const { onItemSelected, selectedItem } = props;
-  const itemList = <PersonList onItemSelected={onItemSelected} />;
-  const details = <PersonDetails itemId={selectedItem} />;
+const PeoplePage = ({ history, match }) => {
+  const { id } = match.params;
+  let details;
+  const itemList = <PersonList onItemSelected={(newId) => history.push(newId)} />;
+  if (!id) {
+    details = (
+      <p className="select-item alert-warning p-2 text-center">You should select any item.</p>
+    );
+  } else {
+    details = <PersonDetails itemId={id} />;
+  }
+
   return (
     <ErrorBoundry>
       <Row left={itemList} right={details} />
@@ -16,30 +25,13 @@ const PeoplePageView = (props) => {
   );
 };
 
-PeoplePageView.propTypes = {
-  onItemSelected: PropTypes.func,
-  selectedItem: PropTypes.number,
+PeoplePage.propTypes = {
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.node,
+    }).isRequired,
+  }).isRequired,
+  history: PropTypes.instanceOf(Object).isRequired,
 };
 
-PeoplePageView.defaultProps = {
-  onItemSelected: () => {},
-  selectedItem: 1,
-};
-
-export default class PeoplePage extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      selectedItem: 1,
-    };
-  }
-
-  onItemSelected = (id) => {
-    this.setState({ selectedItem: id });
-  };
-
-  render() {
-    const { selectedItem } = this.state;
-    return <PeoplePageView selectedItem={selectedItem} onItemSelected={this.onItemSelected} />;
-  }
-}
+export default withRouter(PeoplePage);

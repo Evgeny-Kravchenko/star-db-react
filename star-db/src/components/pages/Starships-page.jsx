@@ -1,45 +1,21 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
-import { StarshipList, StarshipDetails } from '../sw-components';
-import Row from '../Row';
+import { withRouter } from 'react-router-dom';
+
+import { StarshipList } from '../sw-components';
 import ErrorBoundry from '../Error-boundry';
 
-const StarshipPageView = (props) => {
-  const { onItemSelected, selectedItem } = props;
-  const itemList = <StarshipList onItemSelected={onItemSelected} />;
-  const details = <StarshipDetails itemId={selectedItem} />;
+const StarshipPage = ({ history }) => {
   return (
     <ErrorBoundry>
-      <Row left={itemList} right={details} />
+      <StarshipList onItemSelected={(id) => history.push(id)} />
     </ErrorBoundry>
   );
 };
 
-StarshipPageView.propTypes = {
-  onItemSelected: PropTypes.func,
-  selectedItem: PropTypes.number,
+StarshipPage.propTypes = {
+  history: PropTypes.instanceOf(Object).isRequired,
 };
 
-StarshipPageView.defaultProps = {
-  onItemSelected: () => {},
-  selectedItem: 1,
-};
-
-export default class StarshipPage extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      selectedItem: 2,
-    };
-  }
-
-  onItemSelected = (id) => {
-    this.setState({ selectedItem: id });
-  };
-
-  render() {
-    const { selectedItem } = this.state;
-    return <StarshipPageView selectedItem={selectedItem} onItemSelected={this.onItemSelected} />;
-  }
-}
+export default withRouter(StarshipPage);
