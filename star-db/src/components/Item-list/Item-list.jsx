@@ -19,7 +19,7 @@ const ItemList = (props) => {
       </button>
     );
   });
-  return <div className="list-group items-list">{itemListElements}</div>;
+  return <div className="list-group items-list mx-2">{itemListElements}</div>;
 };
 
 ItemList.propTypes = {

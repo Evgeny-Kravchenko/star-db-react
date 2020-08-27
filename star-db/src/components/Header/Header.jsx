@@ -12,7 +12,7 @@ const Header = (props) => {
       <Link to="/">
         <h1 className="header__title">Star DB</h1>
       </Link>
-      <ul className="nav nav-tabs">
+      <ul className="nav nav-tabs navigation">
         <li className="nav-item">
           <Link
             className={`nav-link ${activePage === 'people' ? 'active' : null}`}
