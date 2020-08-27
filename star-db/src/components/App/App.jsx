@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import Header from '../Header';
 import RandomPlanet from '../Random-planet';
-import { PeoplePage, PlanetPage, StarshipPage } from '../pages';
+import { PeoplePage, PlanetPage, StarshipPage, SecretPage, LoginPage } from '../pages';
 import StarshipDetails from '../sw-components/Starship-details';
 
 import { SwapiServiceProvider } from '../Swapi-service-context';
@@ -14,8 +14,13 @@ import SwapiService from '../../services/swapi.service';
 
 const App = () => {
   const swapiService = new SwapiService();
-  const path = window.location.pathname.match(/starships|planets|people/i);
+  const path = window.location.pathname.match(/starships|planets|people|login/i);
   const [activePage, setActivePage] = useState(path && path[0]);
+  const [isLoggedIn, setLoggedIn] = useState(false);
+
+  const onLogin = () => {
+    setLoggedIn((value) => !value);
+  };
 
   const changeActivePage = (page) => {
     setActivePage(page);
@@ -26,7 +31,11 @@ const App = () => {
       <SwapiServiceProvider value={swapiService}>
         <Router>
           <div className="application">
-            <Header activePage={activePage} changeActivePage={changeActivePage} />
+            <Header
+              activePage={activePage}
+              changeActivePage={changeActivePage}
+              isLoggedIn={isLoggedIn}
+            />
             <RandomPlanet />
             <Route
               path="/"
@@ -42,6 +51,24 @@ const App = () => {
                 const { id } = match.params;
                 return <StarshipDetails itemId={id} />;
               }}
+            />
+            <Route
+              path="/login"
+              render={() => (
+                <LoginPage
+                  isLoggedIn={isLoggedIn}
+                  onLogin={onLogin}
+                  changeActivePage={changeActivePage}
+                />
+              )}
+              exact
+            />
+            <Route
+              path="/secret"
+              render={() => (
+                <SecretPage isLoggedIn={isLoggedIn} changeActivePage={changeActivePage} />
+              )}
+              exact
             />
           </div>
         </Router>
