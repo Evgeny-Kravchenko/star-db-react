@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import './Header.scss';
 
 const Header = (props) => {
-  const { activePage, changeActivePage } = props;
+  const { activePage, changeActivePage, isLoggedIn } = props;
   return (
     <div className="header">
       <Link to="/">
@@ -40,6 +40,24 @@ const Header = (props) => {
             Starships
           </Link>
         </li>
+        <li className="nav-item">
+          <Link
+            className={`nav-link ${activePage === 'login' ? 'active' : null}`}
+            to="/login/"
+            onClick={() => changeActivePage('login')}
+          >
+            Login
+          </Link>
+        </li>
+        <li className="nav-item">
+          <Link
+            className={`nav-link ${activePage === 'secret' && isLoggedIn ? 'active' : null}`}
+            to="/secret/"
+            onClick={() => changeActivePage('secret')}
+          >
+            Secret page
+          </Link>
+        </li>
       </ul>
     </div>
   );
@@ -48,6 +66,7 @@ const Header = (props) => {
 Header.propTypes = {
   activePage: PropTypes.string,
   changeActivePage: PropTypes.func,
+  isLoggedIn: PropTypes.bool.isRequired,
 };
 
 Header.defaultProps = {
