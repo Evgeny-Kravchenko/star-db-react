@@ -4,10 +4,12 @@ import PropTypes from 'prop-types';
 
 const LoginPage = ({ isLoggedIn, onLogin, changeActivePage, history }) => {
   return (
-    <div className="jumbotron">
-      <p>{!isLoggedIn ? 'Login to see the secret page!!!' : 'You logged in'}</p>
+    <div className="jumbotron d-flex justify-content-center flex-column mx-2">
+      <p className="text-center">
+        {!isLoggedIn ? 'Login to see the secret page!!!' : 'You logged in'}
+      </p>
       <button
-        className="btn btn-primary"
+        className="btn btn-primary mx-auto"
         onClick={() => {
           onLogin();
           if (!isLoggedIn) {
