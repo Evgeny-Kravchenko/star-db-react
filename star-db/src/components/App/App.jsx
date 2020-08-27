@@ -6,7 +6,6 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Header from '../Header';
 import RandomPlanet from '../Random-planet';
 import { PeoplePage, PlanetPage, StarshipPage, SecretPage, LoginPage } from '../pages';
-import StarshipDetails from '../sw-components/Starship-details';
 
 import { SwapiServiceProvider } from '../Swapi-service-context';
 import ErrorBoundry from '../Error-boundry';
@@ -44,15 +43,8 @@ const App = () => {
                 exact
               />
               <Route path="/people/:id?" component={PeoplePage} exact />
-              <Route path="/planets" component={PlanetPage} exact />
-              <Route path="/starships/" component={StarshipPage} exact />
-              <Route
-                path="/starships/:id"
-                render={({ match }) => {
-                  const { id } = match.params;
-                  return <StarshipDetails itemId={id} />;
-                }}
-              />
+              <Route path="/planets/:id?" component={PlanetPage} exact />
+              <Route path="/starships/:id?" component={StarshipPage} exact />
               <Route
                 path="/login"
                 render={() => (

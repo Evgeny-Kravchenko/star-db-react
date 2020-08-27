@@ -25,7 +25,7 @@ const Header = (props) => {
         <li className="nav-item">
           <Link
             className={`nav-link ${activePage === 'planets' ? 'active' : null}`}
-            to="/planets"
+            to="/planets/"
             onClick={() => changeActivePage('planets')}
           >
             Planets

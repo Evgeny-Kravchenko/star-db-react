@@ -1,14 +1,22 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
 
 import { PlanetList, PlanetDetails } from '../sw-components';
 import Row from '../Row';
 import ErrorBoundry from '../Error-boundry';
 
-const PlanetPageView = (props) => {
-  const { onItemSelected, selectedItem } = props;
-  const itemList = <PlanetList onItemSelected={onItemSelected} />;
-  const details = <PlanetDetails itemId={selectedItem} />;
+const PlanetPage = ({ history, match }) => {
+  const { id } = match.params;
+  let details;
+  const itemList = <PlanetList onItemSelected={(newId) => history.push(newId)} />;
+  if (!id) {
+    details = (
+      <p className="select-item alert-warning p-2 text-center">You should select any item.</p>
+    );
+  } else {
+    details = <PlanetDetails itemId={id} />;
+  }
   return (
     <ErrorBoundry>
       <Row left={itemList} right={details} />
@@ -16,30 +24,13 @@ const PlanetPageView = (props) => {
   );
 };
 
-PlanetPageView.propTypes = {
-  onItemSelected: PropTypes.func,
-  selectedItem: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+PlanetPage.propTypes = {
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.node,
+    }).isRequired,
+  }).isRequired,
+  history: PropTypes.instanceOf(Object).isRequired,
 };
 
-PlanetPageView.defaultProps = {
-  onItemSelected: () => {},
-  selectedItem: 5,
-};
-
-export default class PlanetPage extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      selectedItem: 5,
-    };
-  }
-
-  onItemSelected = (id) => {
-    this.setState({ selectedItem: id });
-  };
-
-  render() {
-    const { selectedItem } = this.state;
-    return <PlanetPageView selectedItem={selectedItem} onItemSelected={this.onItemSelected} />;
-  }
-}
+export default withRouter(PlanetPage);
